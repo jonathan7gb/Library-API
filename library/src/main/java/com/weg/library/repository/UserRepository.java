@@ -16,7 +16,7 @@ public class UserRepository {
                 INSERT INTO user
                 (name, email)
                 VALUES
-                (?,?, ?)
+                (?,?)
                 """;
         try(Connection conn = ConectDatabase.conect();
             PreparedStatement stmt = conn.prepareStatement(sql,
@@ -120,7 +120,7 @@ public class UserRepository {
         try(Connection conn = ConectDatabase.conect();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
         }
     }
 }

@@ -34,7 +34,7 @@ public class BookService {
         return bookList;
     }
 
-    public Book uopdateBook(Book book, Long id) throws SQLException{
+    public Book updateBook(Book book, Long id) throws SQLException{
         book = bookRepository.findById(id);
 
         if(book == null){

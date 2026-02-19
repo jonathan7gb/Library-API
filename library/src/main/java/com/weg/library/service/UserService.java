@@ -34,10 +34,10 @@ public class UserService {
         return userList;
     }
 
-    public User uopdateUser(User user, Long id) throws SQLException{
-        user = userRepository.findById(id);
+    public User updateUser(User user, Long id) throws SQLException{
+        User userFound = userRepository.findById(id);
 
-        if(user == null){
+        if(userFound == null){
             throw new RuntimeException("No users with this Id found!");
         }
 
