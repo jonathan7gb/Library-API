@@ -26,7 +26,7 @@ public class LoanService {
         List<Loan> listLoan = loanRepository.findAll();
         for(Loan l: listLoan){
             if(Objects.equals(l.getBook_id(), loan.getBook_id()) && l.getReturn_date() == null){
-                throw new RuntimeException("Loan canceled. This books already used in other loan!");
+                throw new RuntimeException("Loan cancelled. This book is already being used for another loan!");
             }
         }
         return loanRepository.save(loan);
