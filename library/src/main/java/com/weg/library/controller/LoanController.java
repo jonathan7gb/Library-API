@@ -77,11 +77,11 @@ public class LoanController {
 
     @GetMapping("/user_loans/{id}")
     public ResponseEntity<List<Loan>> findAllLoans(
-            @PathVariable Long user_id
+            @PathVariable Long id
     ){
         List<Loan> loans = new ArrayList<>();
         try{
-            return ResponseEntity.ok().body(loanService.findAllLoansByUser(user_id));
+            return ResponseEntity.ok().body(loanService.findAllLoansByUser(id));
         }catch (SQLException e){
             throw new RuntimeException(e.getMessage());
         }

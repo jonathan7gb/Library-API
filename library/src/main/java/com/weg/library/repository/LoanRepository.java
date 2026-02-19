@@ -179,9 +179,8 @@ public class LoanRepository {
     public boolean registerReturnDate(Long id, LocalDate return_date) throws SQLException {
         String sql = """
                 UPDATE loan
-                set return_date = ?,
-                WHERE
-                id  = ?
+                set return_date = ?
+                WHERE id  = ?
                 """;
 
         try(Connection conn = ConectDatabase.conect();
