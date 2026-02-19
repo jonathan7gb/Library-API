@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class LoanService {
@@ -22,6 +23,12 @@ public class LoanService {
             throw new RuntimeException("Loan can't be null!");
         }
 
+        List<Loan> listLoan = loanRepository.findAll();
+        for(Loan l: listLoan){
+            if(Objects.equals(l.getBook_id(), loan.getBook_id()) && l.getReturn_date() == null){
+                throw new RuntimeException("Loan canceled. This books already used in other loan!");
+            }
+        }
         return loanRepository.save(loan);
     }
 

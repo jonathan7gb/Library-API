@@ -19,7 +19,7 @@ id BIGINT AUTO_INCREMENT PRIMARY KEY,
 book_id BIGINT NOT NULL,
 user_id BIGINT NOT NULL,
 loan_date DATE NOT NULL,
-devolution_date DATE,
+return_date DATE,
 FOREIGN KEY (book_id) REFERENCES book(id),
 FOREIGN KEY (user_id) REFERENCES user(id)
 );
