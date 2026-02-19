@@ -16,15 +16,15 @@ public class LoanRepository {
     public Loan save(Loan loan) throws SQLException {
         String sql = """
                 INSERT INTO loan
-                (user_id, book_id, loan_date)
+                (book_id, user_id, loan_date)
                 VALUES
                 (?,?, ?)
                 """;
         try(Connection conn = ConectDatabase.conect();
             PreparedStatement stmt = conn.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS)){
-            stmt.setLong(1,loan.getUser_id());
-            stmt.setLong(2,loan.getBook_id());
+            stmt.setLong(1,loan.getBook_id());
+            stmt.setLong(2,loan.getUser_id());
             stmt.setDate(3, Date.valueOf(loan.getLoan_date()));
             stmt.executeUpdate();
 
@@ -43,8 +43,8 @@ public class LoanRepository {
 
         String sql = """
                 SELECT id
-                       ,user_id
                        ,book_id
+                       ,user_id
                        ,loan_date
                        ,return_date
                 FROM loan
@@ -61,7 +61,9 @@ public class LoanRepository {
                         rs.getLong(2),
                         rs.getLong(3),
                         rs.getDate(4).toLocalDate(),
-                        rs.getDate(5).toLocalDate()
+                        rs.getDate("return_date") != null
+                                ? rs.getDate("return_date").toLocalDate()
+                                : null
                 ));
             }
         }
@@ -71,8 +73,8 @@ public class LoanRepository {
     public boolean update(Loan loan, Long id) throws SQLException {
         String sql = """
                 UPDATE loan
-                set user_id = ?,
-                book_id = ?,
+                set book_id = ?,
+                user_id = ?,
                 loan_date = ?
                 WHERE
                 id  = ?
@@ -80,8 +82,8 @@ public class LoanRepository {
 
         try(Connection conn = ConectDatabase.conect();
             PreparedStatement stmt = conn.prepareStatement(sql)){
-            stmt.setLong(1, loan.getUser_id());
-            stmt.setLong(2, loan.getBook_id());
+            stmt.setLong(1, loan.getBook_id());
+            stmt.setLong(2, loan.getUser_id());
             stmt.setDate(3, Date.valueOf(loan.getLoan_date()));
             stmt.setLong(4, id);
 
@@ -97,8 +99,8 @@ public class LoanRepository {
     public Loan findById(Long id) throws SQLException {
         String sql = """
                  SELECT id
-                       ,user_id
                        ,book_id
+                       ,user_id
                        ,loan_date
                        ,return_date
                 FROM loan
@@ -116,7 +118,9 @@ public class LoanRepository {
                         rs.getLong(2),
                         rs.getLong(3),
                         rs.getDate(4).toLocalDate(),
-                        rs.getDate(5).toLocalDate()
+                        rs.getDate("return_date") != null
+                                ? rs.getDate("return_date").toLocalDate()
+                                : null
                 );
             }
         }
@@ -142,8 +146,8 @@ public class LoanRepository {
 
         String sql = """
                 SELECT id
-                       ,user_id
                        ,book_id
+                       ,user_id
                        ,loan_date
                        ,return_date
                 FROM loan
@@ -163,7 +167,9 @@ public class LoanRepository {
                         rs.getLong(2),
                         rs.getLong(3),
                         rs.getDate(4).toLocalDate(),
-                        rs.getDate(5).toLocalDate()
+                        rs.getDate("return_date") != null
+                                ? rs.getDate("return_date").toLocalDate()
+                                : null
                 ));
             }
         }
