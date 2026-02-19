@@ -73,14 +73,14 @@ public class LoanService {
         return loanList;
     }
 
-    public void registReturnDate (Long id, LocalDate return_date) throws SQLException{
+    public void registerReturnDate (Long id, LocalDate return_date) throws SQLException{
 
         if(loanRepository.findById(id) == null){
             throw new RuntimeException("No loans with this Id found!");
         }
 
-        if(!loanRepository.registReturnDate(id, return_date)){
-            throw new RuntimeException("Error: return date not registed at the system");
+        if(!loanRepository.registerReturnDate(id, return_date)){
+            throw new RuntimeException("Error: return date not registered at the system");
         }
 
     }

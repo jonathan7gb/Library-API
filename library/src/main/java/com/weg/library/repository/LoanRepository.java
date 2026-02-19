@@ -170,7 +170,7 @@ public class LoanRepository {
         return loans;
     }
 
-    public boolean registReturnDate(Long id, LocalDate return_date) throws SQLException {
+    public boolean registerReturnDate(Long id, LocalDate return_date) throws SQLException {
         String sql = """
                 UPDATE loan
                 set return_date = ?,
