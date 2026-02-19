@@ -127,7 +127,7 @@ public class BookRepository {
         try(Connection conn = ConectDatabase.conect();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
+            stmt.executeUpdate();
         }
     }
 

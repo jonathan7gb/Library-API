@@ -36,9 +36,9 @@ public class LoanService {
     }
 
     public Loan updateLoan(Loan loan, Long id) throws SQLException{
-        loan = loanRepository.findById(id);
+        Loan loanFound = loanRepository.findById(id);
 
-        if(loan == null){
+        if(loanFound == null){
             throw new RuntimeException("No loans with this Id found!");
         }
 

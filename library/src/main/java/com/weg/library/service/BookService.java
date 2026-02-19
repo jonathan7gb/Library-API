@@ -35,9 +35,9 @@ public class BookService {
     }
 
     public Book updateBook(Book book, Long id) throws SQLException{
-        book = bookRepository.findById(id);
+        Book bookFound = bookRepository.findById(id);
 
-        if(book == null){
+        if(bookFound == null){
             throw new RuntimeException("No books with this Id found!");
         }
 
