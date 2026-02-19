@@ -29,4 +29,8 @@ public class Loan {
         this.loan_date = loan_date;
         this.return_date = return_date;
     }
+
+    public Loan(LocalDate return_date) {
+        this.return_date = return_date;
+    }
 }
