@@ -1,6 +1,7 @@
 package com.weg.library.controller;
 
-import com.weg.library.model.Book;
+import com.weg.library.dto.book.BookRequestDto;
+import com.weg.library.dto.book.BookResponseDto;
 import com.weg.library.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> save(
-            @RequestBody Book book
+    public ResponseEntity<BookResponseDto> save(
+            @RequestBody BookRequestDto book
     ){
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(bookService.saveBook(book));
@@ -32,8 +33,8 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> findAllBooks(){
-        List<Book> books = new ArrayList<>();
+    public ResponseEntity<List<BookResponseDto>> findAllBooks(){
+        List<BookResponseDto> books = new ArrayList<>();
         try{
            return ResponseEntity.ok().body(bookService.findAllBooks());
         }catch (SQLException e){
@@ -42,9 +43,9 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(
+    public ResponseEntity<BookResponseDto> updateBook(
             @PathVariable Long id,
-            @RequestBody Book book
+            @RequestBody BookRequestDto book
     ){
         try{
             return ResponseEntity.ok().body(bookService.updateBook(book,id));
@@ -54,7 +55,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> findBookById(
+    public ResponseEntity<BookResponseDto> findBookById(
             @PathVariable Long id
     ){
         try{

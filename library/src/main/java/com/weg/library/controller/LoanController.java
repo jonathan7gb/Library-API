@@ -1,5 +1,7 @@
 package com.weg.library.controller;
 
+import com.weg.library.dto.loan.LoanRequestDto;
+import com.weg.library.dto.loan.LoanResponseDto;
 import com.weg.library.model.Loan;
 import com.weg.library.service.LoanService;
 import org.springframework.http.HttpStatus;
@@ -21,7 +23,7 @@ public class LoanController {
     }
 
     @PostMapping
-    public ResponseEntity<Loan> save(
+    public ResponseEntity<LoanResponseDto> save(
             @RequestBody Loan loan
     ){
         try{
@@ -32,8 +34,8 @@ public class LoanController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Loan>> findAllLoans(){
-        List<Loan> loans = new ArrayList<>();
+    public ResponseEntity<List<LoanResponseDto>> findAllLoans(){
+        List<LoanResponseDto> loans = new ArrayList<>();
         try{
             return ResponseEntity.ok().body(loanService.findAllLoans());
         }catch (SQLException e){
@@ -42,9 +44,9 @@ public class LoanController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Loan> updateLoan(
+    public ResponseEntity<LoanResponseDto> updateLoan(
             @PathVariable Long id,
-            @RequestBody Loan loan
+            @RequestBody LoanRequestDto loan
     ){
         try{
             return ResponseEntity.ok().body(loanService.updateLoan(loan,id));
@@ -54,7 +56,7 @@ public class LoanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Loan> findLoanById(
+    public ResponseEntity<LoanResponseDto> findLoanById(
             @PathVariable Long id
     ){
         try{
@@ -76,7 +78,7 @@ public class LoanController {
     }
 
     @GetMapping("/user_loans/{id}")
-    public ResponseEntity<List<Loan>> findAllLoans(
+    public ResponseEntity<List<LoanResponseDto>> findAllLoans(
             @PathVariable Long id
     ){
         List<Loan> loans = new ArrayList<>();

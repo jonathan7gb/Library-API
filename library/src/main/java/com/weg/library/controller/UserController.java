@@ -1,5 +1,7 @@
 package com.weg.library.controller;
 
+import com.weg.library.dto.user.UserRequestDto;
+import com.weg.library.dto.user.UserResponseDto;
 import com.weg.library.model.User;
 import com.weg.library.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -20,8 +22,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> save(
-            @RequestBody User user
+    public ResponseEntity<UserResponseDto> save(
+            @RequestBody UserRequestDto user
     ){
         try{
            return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(user));
@@ -31,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAllUsers(){
+    public ResponseEntity<List<UserResponseDto>> findAllUsers(){
         try{
             return ResponseEntity.ok().body(userService.findAllUsers());
         }catch (SQLException e){
@@ -40,9 +42,9 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(
+    public ResponseEntity<UserResponseDto> updateUser(
             @PathVariable Long id,
-            @RequestBody User user
+            @RequestBody UserRequestDto user
     ){
         try{
             return ResponseEntity.ok().body(userService.updateUser(user,id));
@@ -52,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(
+    public ResponseEntity<UserResponseDto> findUserById(
             @PathVariable Long id
     ){
         try{

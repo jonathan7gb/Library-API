@@ -1,57 +1,70 @@
 package com.weg.library.service;
 
+import com.weg.library.dto.book.BookRequestDto;
+import com.weg.library.dto.book.BookResponseDto;
+import com.weg.library.mapper.BookMapper;
 import com.weg.library.model.Book;
 import com.weg.library.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
 
-    public BookService (BookRepository bookRepository){
+    public BookService(BookRepository bookRepository, BookMapper bookMapper) {
         this.bookRepository = bookRepository;
+        this.bookMapper = bookMapper;
     }
 
-    public Book saveBook(Book book) throws SQLException{
+    public BookResponseDto saveBook(BookRequestDto book) throws SQLException{
         if(book == null){
             throw new RuntimeException("Book can't be null!");
         }
 
-        return bookRepository.save(book);
+        Book booksaved = bookRepository.save(bookMapper.toEntity(book));
+        return bookMapper.toDto(booksaved);
     }
 
-    public List<Book> findAllBooks() throws SQLException {
+    public List<BookResponseDto> findAllBooks() throws SQLException {
         List<Book> bookList = bookRepository.findAll();
+        List<BookResponseDto> bookListDto =  new ArrayList<>();
 
         if(bookList.isEmpty()){
             throw new RuntimeException("No Books found!");
         }
 
-        return bookList;
+        for(Book b : bookList){
+            bookListDto.add(bookMapper.toDto(b));
+        }
+
+        return bookListDto;
     }
 
-    public Book updateBook(Book book, Long id) throws SQLException{
+    public BookResponseDto updateBook(BookRequestDto book, Long id) throws SQLException{
         Book bookFound = bookRepository.findById(id);
 
         if(bookFound == null){
             throw new RuntimeException("No books with this Id found!");
         }
 
-        bookRepository.update(book, id);
+        bookRepository.update(bookMapper.toEntity(book), id);
 
-        return book;
+
+        return bookMapper.toDto(bookMapper.toEntity(book));
     }
 
-    public Book findBookById(Long id) throws SQLException {
+    public BookResponseDto findBookById(Long id) throws SQLException {
         Book bookFound = bookRepository.findById(id);
         if(bookFound == null){
             throw new RuntimeException("No books with this Id found!");
         }
-        return bookFound;
+        return bookMapper.toDto(bookFound);
     }
 
     public void deleteBookById(Long id) throws SQLException {
