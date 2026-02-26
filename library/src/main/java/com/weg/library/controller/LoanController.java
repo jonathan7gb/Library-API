@@ -24,7 +24,7 @@ public class LoanController {
 
     @PostMapping
     public ResponseEntity<LoanResponseDto> save(
-            @RequestBody Loan loan
+            @RequestBody LoanRequestDto loan
     ){
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(loanService.saveLoan(loan));
