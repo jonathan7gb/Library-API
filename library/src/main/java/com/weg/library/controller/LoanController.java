@@ -4,6 +4,7 @@ import com.weg.library.dto.loan.LoanRequestDto;
 import com.weg.library.dto.loan.LoanResponseDto;
 import com.weg.library.model.Loan;
 import com.weg.library.service.LoanService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class LoanController {
 
     @PostMapping
     public ResponseEntity<LoanResponseDto> save(
-            @RequestBody LoanRequestDto loan
+            @RequestBody @Valid LoanRequestDto loan
     ){
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(loanService.saveLoan(loan));
@@ -46,7 +47,7 @@ public class LoanController {
     @PutMapping("/{id}")
     public ResponseEntity<LoanResponseDto> updateLoan(
             @PathVariable Long id,
-            @RequestBody LoanRequestDto loan
+            @RequestBody @Valid LoanRequestDto loan
     ){
         try{
             return ResponseEntity.ok().body(loanService.updateLoan(loan,id));
@@ -92,7 +93,7 @@ public class LoanController {
     @PutMapping("/register_return_date/{id}")
     public ResponseEntity<String> registerReturnDate(
             @PathVariable Long id,
-            @RequestBody Loan loan
+            @RequestBody @Valid Loan loan
     ){
         try{
             loanService.registerReturnDate(id, loan.getReturn_date());

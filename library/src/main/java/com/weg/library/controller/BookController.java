@@ -3,6 +3,7 @@ package com.weg.library.controller;
 import com.weg.library.dto.book.BookRequestDto;
 import com.weg.library.dto.book.BookResponseDto;
 import com.weg.library.service.BookService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<BookResponseDto> save(
-            @RequestBody BookRequestDto book
+            @RequestBody @Valid BookRequestDto book
     ){
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(bookService.saveBook(book));
@@ -45,7 +46,7 @@ public class BookController {
     @PutMapping("/{id}")
     public ResponseEntity<BookResponseDto> updateBook(
             @PathVariable Long id,
-            @RequestBody BookRequestDto book
+            @RequestBody @Valid BookRequestDto book
     ){
         try{
             return ResponseEntity.ok().body(bookService.updateBook(book,id));

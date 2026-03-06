@@ -4,6 +4,7 @@ import com.weg.library.dto.user.UserRequestDto;
 import com.weg.library.dto.user.UserResponseDto;
 import com.weg.library.model.User;
 import com.weg.library.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDto> save(
-            @RequestBody UserRequestDto user
+            @RequestBody @Valid UserRequestDto user
     ){
         try{
            return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(user));
@@ -44,7 +45,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(
             @PathVariable Long id,
-            @RequestBody UserRequestDto user
+            @RequestBody @Valid UserRequestDto user
     ){
         try{
             return ResponseEntity.ok().body(userService.updateUser(user,id));
