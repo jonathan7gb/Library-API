@@ -1,7 +1,9 @@
 package com.weg.library.dto.loan;
 
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
 
@@ -21,6 +23,7 @@ public record LoanRequestDto (
 
         @NotBlank(message = "A data de devolução é obrigatória")
         @NotNull(message = "A data de devolução não pode ser nula")
+        @Future(message = "A data de devolução não pode ser no passado")
         LocalDate return_date
 ){
 }
